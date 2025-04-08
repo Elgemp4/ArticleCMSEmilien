@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -11,7 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view("users.list", ["users" => User::paginate(25)]);
     }
 
     /**
@@ -28,6 +30,11 @@ class UserController extends Controller
     public function show(string $id)
     {
         //
+        
+    }
+
+    public function edit(User $user){
+
     }
 
     /**
@@ -41,8 +48,8 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        User::destroy($user->id);
     }
 }

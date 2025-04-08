@@ -28,6 +28,8 @@ Route::prefix('/pages')->name('article.')->controller(ArticleController::class)-
 
 Route::prefix('/user')->name('user.')->controller(UserController::class)->group(function()  {
     Route::get("list", "index")->name("list");
+    Route::get("/{user}", "edit")->name("edit");
+    Route::delete("/{user}", "destroy")->name("delete");
 });
 
 Route::middleware('auth')->group(function () {
