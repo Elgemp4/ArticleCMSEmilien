@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Middleware\RoleMiddleware;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -11,22 +12,23 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 Route::prefix('/pages')->name('article.')->controller(ArticleController::class)->group(function() {
     Route::get('', "index")->name("list");
-    Route::get('/create', "create")->name("create");
-    Route::post('', "store")->name("store");
-    Route::prefix("/{article}")->group(function() {
-        Route::get('', 'show')->name("show");
-        Route::delete('', 'destroy')->name("delete");
-        Route::get('/edit', 'edit')->name("edit");
-        Route::put('/edit', 'update')->name('update');
-    })->where(['article' => '[0-9]+']);
-    
+    Route::middleware(['auth', 'role:admin|editor'])->group(function () {
+        Route::get('/create', "create")->name("create");
+        Route::post('', "store")->name("store");
+        Route::prefix("/{article}")->group(function() {
+            Route::get('', 'show')->name("show");
+            Route::delete('', 'destroy')->name("delete");
+            Route::get('/edit', 'edit')->name("edit");
+            Route::put('/edit', 'update')->name('update');
+        })->where(['article' => '[0-9]+']);
+    });
 });
 
-Route::prefix('/users')->name('user.')->controller(UserController::class)->group(function()  {
+Route::prefix('/users')->name('user.')->middleware(['auth', "role:admin"])->controller(UserController::class)->group(function()  {
     Route::get("", "index")->name("list");
     Route::get("/create", "create")->name("create");
     Route::post("/", "store")->name("store");
