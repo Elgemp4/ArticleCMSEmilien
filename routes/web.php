@@ -26,9 +26,12 @@ Route::prefix('/pages')->name('article.')->controller(ArticleController::class)-
     
 });
 
-Route::prefix('/user')->name('user.')->controller(UserController::class)->group(function()  {
-    Route::get("list", "index")->name("list");
+Route::prefix('/users')->name('user.')->controller(UserController::class)->group(function()  {
+    Route::get("", "index")->name("list");
+    Route::get("/create", "create")->name("create");
+    Route::post("/", "store")->name("store");
     Route::get("/{user}", "edit")->name("edit");
+    Route::put("/{user}", "update")->name("update");
     Route::delete("/{user}", "destroy")->name("delete");
 });
 

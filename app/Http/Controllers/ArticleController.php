@@ -28,7 +28,7 @@ class ArticleController extends Controller
     {
         $article = Article::create($request->validated());
         return redirect()->route('article.list');
-        return redirect()->route("article.show", ["article" => $article->id]);
+        // return redirect()->route("article.show", ["article" => $article->id]);
     }
 
     /**

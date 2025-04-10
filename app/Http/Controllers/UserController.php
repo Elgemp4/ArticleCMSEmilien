@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\ModifyUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -16,12 +16,19 @@ class UserController extends Controller
         return view("users.list", ["users" => User::paginate(25)]);
     }
 
+    public function create(){
+        return view("users.create");
+    }
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $validated["password"] = bcrypt("password");
+        $user = User::create($validated);
+        $user->syncRoles([$validated["role"]]);
+        return redirect()->route("user.list")->with(["success" => "L'utilisateur $user->name à bien été créé !"]);
     }
 
     /**
@@ -34,15 +41,24 @@ class UserController extends Controller
     }
 
     public function edit(User $user){
-
+        return view("users.edit", ["user" => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ModifyUserRequest $request, User $user)
     {
-        //
+        $validated = $request->validated();
+
+        $user->name = $validated["name"];
+        $user->email = $validated["email"];
+
+        $user->syncRoles([$validated["role"]]);
+
+        $user->save();
+
+        return redirect()->route("user.list")->with(["success" => "L'utilisateur $user->name à bien été modifié !"]);
     }
 
     /**
@@ -51,5 +67,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         User::destroy($user->id);
+        return redirect()->route("user.list")->with(["success" => "L'utilisateur $user->name à bien été supprimé !"]);
     }
 }

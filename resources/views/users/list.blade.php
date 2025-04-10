@@ -9,7 +9,7 @@
     </x-slot>
 
     <div class="py-12 flex justify-center  items-center flex-col ">
-        <x-primary-button class="mb-8" onclick="document.location='{{ route('article.create') }}'">➕ Créer une nouvelle page</x-primary-button>
+        <x-primary-button class="mb-8" onclick="document.location='{{ route('user.create') }}'">➕ Créer un nouvel utilisateur</x-primary-button>
         <table class="table-auto">
             <thead>
                 <tr class="bg-slate-600 text-white font-bold">
