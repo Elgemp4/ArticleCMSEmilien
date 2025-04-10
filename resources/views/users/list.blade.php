@@ -10,7 +10,7 @@
 
     <div class="py-12 flex justify-center  items-center flex-col ">
         <x-primary-button class="mb-8" onclick="document.location='{{ route('user.create') }}'">➕ Créer un nouvel utilisateur</x-primary-button>
-        <table class="table-auto">
+        <table class="table-auto mb-8">
             <thead>
                 <tr class="bg-slate-600 text-white font-bold">
                     <th class="py-2 px-8">Nom</th>
@@ -40,8 +40,7 @@
                     </tr>  
                 @endforeach
             </tbody>
-            
-            
         </table>
+        {{ $users->links() }}
     </div>
 </x-app-layout>

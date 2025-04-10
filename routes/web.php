@@ -22,8 +22,8 @@ Route::prefix('/pages')->name('article.')->controller(ArticleController::class)-
         Route::prefix("/{article}")->group(function() {
             Route::get('', 'show')->name("show");
             Route::delete('', 'destroy')->name("delete");
+            Route::put('', 'update')->name('update');
             Route::get('/edit', 'edit')->name("edit");
-            Route::put('/edit', 'update')->name('update');
         })->where(['article' => '[0-9]+']);
     });
     
@@ -34,7 +34,7 @@ Route::prefix('/users')->name('user.')->middleware(['auth', "role:admin"])->cont
     Route::get("", "index")->name("list");
     Route::get("/create", "create")->name("create");
     Route::post("/", "store")->name("store");
-    Route::get("/{user}", "edit")->name("edit");
+    Route::get("/{user}/edit", "edit")->name("edit");
     Route::put("/{user}", "update")->name("update");
     Route::delete("/{user}", "destroy")->name("delete");
 });

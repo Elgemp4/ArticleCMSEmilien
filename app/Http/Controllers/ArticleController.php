@@ -14,7 +14,11 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return view('articles.list', ['articles' => Article::paginate(25)]);
+        if(auth()->user()->hasRole("viewer")){
+            return view('articles.list', ['articles' =>  Article::where(["status" => "published"])->paginate(25)]);
+        }
+
+        return view('articles.list', ['articles' => Article::paginate(10)]);
     }
 
     public function create() {

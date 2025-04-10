@@ -12,7 +12,7 @@
         @hasanyrole(["admin", "editor"])
         <x-primary-button class="mb-8" onclick="document.location='{{ route('article.create') }}'">➕ Créer une nouvelle page</x-primary-button>
         @endhasanyrole
-        <table class="table-auto">
+        <table class="table-auto mb-8">
             <thead>
                 <tr class="bg-slate-600 text-white font-bold">
                     <th class="py-2 px-8">Titre</th>
@@ -41,7 +41,7 @@
                                 <x-primary-button>🗑️ Supprimer</x-primary-button>
                             </form>
                             @endhasanyrole
-                            <form action="{{ route('article.show', ['article' => $article->id]) }}" method="GET">
+                            <form action="{{ route('article.view', ['article' => $article->id]) }}" method="GET">
                                 <x-primary-button>📄 Lire</x-primary-button>
                             </form>
                             
@@ -53,5 +53,6 @@
             
             
         </table>
+        {{ $articles->links() }}
     </div>
 </x-app-layout>
