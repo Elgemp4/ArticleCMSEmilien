@@ -26,6 +26,8 @@ Route::prefix('/pages')->name('article.')->controller(ArticleController::class)-
             Route::put('/edit', 'update')->name('update');
         })->where(['article' => '[0-9]+']);
     });
+    
+    Route::get('/{article}', "show")->name("view")->where(['article' => '[0-9]+']);
 });
 
 Route::prefix('/users')->name('user.')->middleware(['auth', "role:admin"])->controller(UserController::class)->group(function()  {

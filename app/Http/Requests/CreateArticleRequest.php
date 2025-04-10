@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\PageStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateArticleRequest extends FormRequest
 {
@@ -24,7 +26,7 @@ class CreateArticleRequest extends FormRequest
         return [
             "title" => "required",
             "content" => "required",
-            "status" => "required"
+            "status" => ["required", Rule::enum(PageStatusEnum::class)],
         ];
     }
 }

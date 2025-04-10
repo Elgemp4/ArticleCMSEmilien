@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\RolesEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateUserRequest extends FormRequest
 {
@@ -24,7 +26,7 @@ class CreateUserRequest extends FormRequest
         return [
             "name" => "required",
             "email" => "required|email",
-            "role" => "required"
+            "role" => ["required", Rule::enum(RolesEnum::class)]
         ];
     }
 }

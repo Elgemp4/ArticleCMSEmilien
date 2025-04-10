@@ -18,9 +18,7 @@
                     <th class="py-2 px-8">Titre</th>
                     <th class="py-2 px-8">Status</th>
                     <th class="py-2 px-8">Date de création</th>
-                    @hasanyrole(["admin", "editor"])
                     <th class="py-2 px-8">Actions</th>
-                    @endhasanyrole
                 </tr>
             </thead>
             <tbody>
@@ -29,20 +27,26 @@
                         <td class="py-2 px-8 text-center" >{{ $article->title }}</td>
                         <td class="py-2 px-8 text-center" >{{ $article->status }}</td>
                         <td class="py-2 px-8 text-center" >{{ $article->created_at->format("Y-m-d") }}</td>
-                        @hasanyrole(["admin", "editor"])
+                        
                         <td class="py-2 px-8 text-center flex items-center gap-4">
+                            @hasanyrole(["admin", "editor"])
                             <form action="{{ route('article.edit', ['article' => $article->id]) }}" method="GET">
                                 <x-primary-button>🖊️ Editer</x-primary-button>
                             </form>
+                            @endhasanyrole
+                            @hasanyrole(["admin"])
                             <form action="{{ route('article.delete', ['article' => $article->id]) }}" method="POST">
                                 @method("DELETE")
                                 @csrf
                                 <x-primary-button>🗑️ Supprimer</x-primary-button>
                             </form>
-                            
+                            @endhasanyrole
+                            <form action="{{ route('article.show', ['article' => $article->id]) }}" method="GET">
+                                <x-primary-button>📄 Lire</x-primary-button>
+                            </form>
                             
                         </td>
-                        @endhasanyrole
+                        
                     </tr>  
                 @endforeach
             </tbody>

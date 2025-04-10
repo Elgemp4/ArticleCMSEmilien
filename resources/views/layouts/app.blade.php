@@ -30,7 +30,7 @@
                 <p class="bg-green-400 text-white text-center p-4">{{ Session::get('success') }}</p>
             @endif
             <!-- Page Content -->
-            <main class="{{ $attributes->get('class') }} ">
+            <main class="{{ $attributes->get('class') }}">
                 {{ $slot }}
             </main>
         </div>
