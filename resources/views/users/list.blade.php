@@ -8,6 +8,14 @@
         </h2>
     </x-slot>
 
+    @php
+        $display= [
+            "viewer" => "Lecteur",
+            "admin" => "Admin",
+            "editor" => "Éditeur"
+        ]
+    @endphp
+
     <div class="py-12 flex justify-center  items-center flex-col ">
         <x-primary-button class="mb-8" onclick="document.location='{{ route('user.create') }}'">➕ Créer un nouvel utilisateur</x-primary-button>
         <table class="table-auto mb-8">
@@ -24,7 +32,7 @@
                     <tr class="border-b border-gray-300 bg-slate-200">
                         <td class="py-2 px-8 text-center" >{{ $user->name }}</td>
                         <td class="py-2 px-8 text-center" >{{ $user->email }}</td>
-                        <td class="py-2 px-8 text-center" >{{ $user->getRoleNames()->first() }}</td>
+                        <td class="py-2 px-8 text-center" >{{ $display[$user->getRoleNames()->first()] }}</td>
                         <td class="py-2 px-8 text-center flex items-center gap-4">
                             <form action="{{ route('user.edit', ['user' => $user]) }}" method="GET">
                                 <x-primary-button>🖊️ Editer</x-primary-button>
